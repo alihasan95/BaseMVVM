@@ -1,25 +1,18 @@
 package com.teaml.basemvvm.ui.main
 
-import androidx.lifecycle.ViewModelProvider
-import com.teaml.basemvvm.data.DataRepository
-import com.teaml.basemvvm.util.rx.SchedulerProvider
+import androidx.lifecycle.ViewModel
+import com.teaml.basemvvm.di.annotation.ViewModelKey
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import com.teaml.basemvvm.ViewModelProviderFactory
-
+import dagger.multibindings.IntoMap
 
 
 @Module
-class MainActivityModule {
+abstract class MainActivityModule {
 
-    @Provides
-    fun mainViewModelProvider(mainViewModel: MainViewModel): ViewModelProvider.Factory {
-        return ViewModelProviderFactory(mainViewModel)
-    }
-
-    @Provides
-    fun provideMainViewModel(dataRepository: DataRepository,schedulerProvider: SchedulerProvider): MainViewModel {
-        return MainViewModel(dataRepository, schedulerProvider)
-    }
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
 }

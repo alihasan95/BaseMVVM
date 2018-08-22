@@ -1,21 +1,16 @@
 package com.teaml.basemvvm.ui.main.home
 
-import androidx.lifecycle.ViewModelProvider
-import com.teaml.basemvvm.ViewModelProviderFactory
-import com.teaml.basemvvm.ui.main.MainViewModel
+import androidx.lifecycle.ViewModel
+import com.teaml.basemvvm.di.annotation.ViewModelKey
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.multibindings.IntoMap
 
 
 @Module
-class HomeFragmentModule {
-    @Provides
-    fun mainViewModelProvider(homeViewModel: HomeViewModel): ViewModelProvider.Factory {
-        return ViewModelProviderFactory(homeViewModel)
-    }
-    @Provides
-    fun provideHomeViewModel(): HomeViewModel {
-        return HomeViewModel()
-    }
-
+abstract class HomeFragmentModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindMainViewModel(viewModel: HomeViewModel): ViewModel
 }
