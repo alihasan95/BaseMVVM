@@ -22,7 +22,7 @@ class DaggerViewModelFactory @Inject constructor(
                     modelClass.isAssignableFrom(it.key)
                 }?.value
                 ?:
-                throw IllegalArgumentException("unknown model class " + modelClass)
+                throw IllegalArgumentException("unknown model class $modelClass")
 
         /*
         var creator: Provider<out ViewModel>? = viewModelsMap[modelClass]

@@ -9,6 +9,7 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class HomeFragmentModule {
+
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
