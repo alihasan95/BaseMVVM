@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.teaml.basemvvm.R
 import com.teaml.basemvvm.base.BaseFragment
 import com.teaml.basemvvm.databinding.HomeFragmentBinding
+import kotlinx.android.synthetic.main.home_fragment.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -36,15 +37,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>() {
         return ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
                 .also { homeViewModel = it } }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         homeDataBinding = getViewDataBinding()
-
-        homeViewModel.getliveData().observe(this, Observer {
-            Log.e("home", it)
-            activity?.toast(it)
-        })
-
     }
 
 }

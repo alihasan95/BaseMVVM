@@ -11,7 +11,7 @@ import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFragment() {
 
-    lateinit var baseActivity: BaseActivity<VD, VM>
+    private var baseActivity: BaseActivity<*, *>? = null
     private var dataBinding: VD? = null
     private var viewModel: VM? = null
 
@@ -34,6 +34,14 @@ abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFr
      */
     abstract fun getViewModel(): VM
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        (context as? BaseActivity<*, *>).let {
+            baseActivity = it
+            baseActivity?.onFragmentAttached()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = getViewModel()
@@ -51,9 +59,20 @@ abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFr
         dataBinding?.executePendingBindings()
     }
 
+    override fun onDetach() {
+        baseActivity = null
+        super.onDetach()
+
+    }
+
+    fun getBaseActivity(): BaseActivity<*, *>? {
+        return baseActivity
+    }
+
     fun getViewDataBinding(): VD {
         return dataBinding!!
     }
+
     interface Callback {
 
         fun onFragmentAttached()
