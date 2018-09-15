@@ -1,7 +1,8 @@
-package com.teaml.basemvvm.di
+package com.teaml.basemvvm.di.component
 
 import com.teaml.basemvvm.App
-import dagger.BindsInstance
+import com.teaml.basemvvm.di.builder.ActivityBuilder
+import com.teaml.basemvvm.di.module.AppModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
@@ -22,7 +23,7 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
     AppModule::class,
-    ActivityBuilder::class, FragmentBuilder::class, ViewModelBuilder::class])
+    ActivityBuilder::class])
 interface AppComponent : AndroidInjector<App>{
 
     @Component.Builder

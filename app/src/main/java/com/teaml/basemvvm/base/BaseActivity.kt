@@ -2,26 +2,27 @@ package com.teaml.basemvvm.base
 
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import dagger.android.support.DaggerAppCompatActivity
 import android.content.pm.PackageManager
 import android.os.Build
 import android.annotation.TargetApi
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
+import android.support.annotation.LayoutRes
+import android.support.v4.app.ActivityCompat.requestPermissions
+import android.support.v4.content.PermissionChecker.checkSelfPermission
 
 
+abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAppCompatActivity() {
 
-
-abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAppCompatActivity()
-, BaseFragment.Callback{
-
-
-    private var mViewModel: VM? = null
-    private lateinit var mViewDataBinding: VD
+    private var viewModel: VM? = null
+    lateinit var viewDataBinding: VD
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         performViewDataBinding()
+        setup()
     }
 
     /**
@@ -33,6 +34,7 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
     /**
      * override to set layout resource for this activity
      */
+    @LayoutRes
     abstract fun getLayoutRes(): Int
 
     /**
@@ -42,24 +44,19 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
     abstract fun getBindingVariable(): Int
 
 
-    private fun performViewDataBinding() {
-        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutRes())
-        mViewModel = mViewModel ?: getViewModel()
-        mViewDataBinding.setVariable(getBindingVariable(), mViewModel)
-        mViewDataBinding.executePendingBindings()
-    }
+    abstract fun setup()
 
-    /**
-     * @return instance of viewDataBinding associated with this activity
-     */
-    fun getViewDataBinding(): VD {
-        return mViewDataBinding
+
+    private fun performViewDataBinding() {
+        viewDataBinding = DataBindingUtil.setContentView(this, getLayoutRes())
+        viewModel = viewModel ?: getViewModel()
+        viewDataBinding.setVariable(getBindingVariable(), viewModel)
+        viewDataBinding.executePendingBindings()
     }
 
     /**
     *  request permission
     *  */
-
     @TargetApi(Build.VERSION_CODES.M)
     fun hasPermission(permission: String): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
@@ -71,13 +68,4 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
             requestPermissions(permissions, requestCode)
         }
     }
-
-    override fun onFragmentAttached() {
-
-    }
-
-    override fun onFragmentDetached(tag: String) {
-
-    }
-
 }

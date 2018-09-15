@@ -1,7 +1,7 @@
 package com.teaml.basemvvm.base
 
-import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableField
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {

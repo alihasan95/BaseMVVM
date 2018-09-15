@@ -1,6 +1,6 @@
 package com.teaml.basemvvm.di.annotation
 
-import androidx.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass
 

@@ -1,4 +1,4 @@
-package com.teaml.basemvvm.di
+package com.teaml.basemvvm.di.builder
 
 import com.teaml.basemvvm.ui.main.home.HomeFragment
 import com.teaml.basemvvm.ui.main.home.HomeFragmentModule
@@ -9,6 +9,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuilder {
 
     @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
-    abstract fun provideHomeFragment(): HomeFragment
+    abstract fun bindHomeFragment(): HomeFragment
 
 }

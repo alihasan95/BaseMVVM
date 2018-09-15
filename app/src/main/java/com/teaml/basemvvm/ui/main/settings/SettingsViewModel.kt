@@ -1,6 +1,7 @@
 package com.teaml.basemvvm.ui.main.settings
 
-import androidx.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModel
+
 
 class SettingsViewModel : ViewModel() {
 
