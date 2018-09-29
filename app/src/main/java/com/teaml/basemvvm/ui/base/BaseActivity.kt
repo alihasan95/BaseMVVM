@@ -1,4 +1,4 @@
-package com.teaml.basemvvm.base
+package com.teaml.basemvvm.ui.base
 
 
 import android.os.Bundle
@@ -9,8 +9,6 @@ import android.annotation.TargetApi
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
-import android.support.v4.app.ActivityCompat.requestPermissions
-import android.support.v4.content.PermissionChecker.checkSelfPermission
 
 
 abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAppCompatActivity() {
@@ -59,7 +57,8 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
     *  */
     @TargetApi(Build.VERSION_CODES.M)
     fun hasPermission(permission: String): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
     @TargetApi(Build.VERSION_CODES.M)

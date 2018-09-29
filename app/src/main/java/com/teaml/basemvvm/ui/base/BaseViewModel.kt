@@ -1,4 +1,4 @@
-package com.teaml.basemvvm.base
+package com.teaml.basemvvm.ui.base
 
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField

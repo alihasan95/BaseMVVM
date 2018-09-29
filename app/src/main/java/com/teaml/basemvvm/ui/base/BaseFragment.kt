@@ -1,9 +1,10 @@
-package com.teaml.basemvvm.base
+package com.teaml.basemvvm.ui.base
 
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,8 @@ import dagger.android.support.DaggerFragment
 abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFragment() {
 
     private var baseActivity: BaseActivity<*, *>? = null
-    private var dataBinding: VD? = null
-    private var viewModel: VM? = null
+    private var viewDataBinding: VD? = null
+    private var baseViewModel: VM? = null
 
     /**
      * Override for set binding variable
@@ -25,6 +26,7 @@ abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFr
     /**
      * @return layout resource id
      */
+    @LayoutRes
     abstract fun getLayoutId(): Int
 
     /**
@@ -33,6 +35,8 @@ abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFr
      * @return view model instance
      */
     abstract fun getViewModel(): VM
+
+    abstract fun setup()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -43,25 +47,24 @@ abstract class BaseFragment<VD : ViewDataBinding, VM : BaseViewModel> : DaggerFr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = getViewModel()
-        setHasOptionsMenu(false)
+        baseViewModel = getViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        dataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        return dataBinding?.root
+        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
+        return viewDataBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataBinding?.setVariable(getBindingVariable(), viewModel)
-        dataBinding?.executePendingBindings()
+        viewDataBinding?.setVariable(getBindingVariable(), baseViewModel)
+        viewDataBinding?.executePendingBindings()
+        setup()
     }
 
     override fun onDetach() {
         baseActivity = null
         super.onDetach()
-
     }
 }

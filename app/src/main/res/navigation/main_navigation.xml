@@ -10,9 +10,4 @@
         android:name="com.teaml.basemvvm.ui.main.home.HomeFragment"
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.teaml.basemvvm.ui.main.settings.SettingsFragment"
-        android:label="settings_fragment"
-        tools:layout="@layout/settings_fragment" />
 </navigation>

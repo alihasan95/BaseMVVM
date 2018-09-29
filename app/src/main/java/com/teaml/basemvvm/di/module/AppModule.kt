@@ -2,8 +2,7 @@ package com.teaml.basemvvm.di.module
 
 import android.content.Context
 import com.teaml.basemvvm.App
-import com.teaml.basemvvm.data.AppDataRepository
-import com.teaml.basemvvm.data.DataRepository
+import com.teaml.basemvvm.data.repository.DataRepository
 import com.teaml.basemvvm.util.rx.AppSchedulerProvider
 import com.teaml.basemvvm.util.rx.SchedulerProvider
 import dagger.Module
@@ -22,7 +21,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideDataRepository(): DataRepository {
-        return AppDataRepository()
+        return DataRepository()
     }
 
     @Provides

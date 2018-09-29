@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import com.teaml.basemvvm.BR
 import com.teaml.basemvvm.R
-import com.teaml.basemvvm.base.BaseFragment
+import com.teaml.basemvvm.ui.base.BaseFragment
 import com.teaml.basemvvm.databinding.HomeFragmentBinding
 import javax.inject.Inject
 
